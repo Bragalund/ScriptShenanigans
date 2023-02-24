@@ -1,5 +1,11 @@
 #!/bin/bash
 
+#
+# Example:
+# 
+# $ httpinfo "https://www.nrk.no"
+#
+
 # Shows time used for http-request/response
 #
 # Used for figuring out if i should consider a cache
@@ -8,9 +14,6 @@
 # Needed dependencies:  
 # 1. curl
 #
-# Example:
-# 
-# $ curltime "https//www.nrk.no"
 
 curl -w @- -o /dev/null -s "$@" <<'EOF'
     time_namelookup:  %{time_namelookup}\n
@@ -22,4 +25,15 @@ curl -w @- -o /dev/null -s "$@" <<'EOF'
                     ----------\n
          time_total:  %{time_total}\n
 EOF
+
+
+# Prints size of payload in Byte  
+# 
+# Used for figuring out if i need a cache in my application.
+#
+# Needed dependencies:
+# 1. curl
+#
+
+curl -so /dev/null $1 -w '%{size_download}'
 
