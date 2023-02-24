@@ -1,0 +1,24 @@
+#!/bin/bash  
+
+# Printer et jpg-bilde som ascii-kunst til terminalen 
+# og legger til regnbuefarger!
+
+# Dependencies:  
+# 1. jp2a  
+# 2. lolcat-c
+#
+# Eksempel:  
+# 
+# $ regnbuebilde  (finner det første tilgjengelige jpg-bildet på disken)
+#
+# $ regnbuebilde /path/til/ditt/bilde.jpg (printer ønsket bilde)  
+#
+
+if [ -z "$1" ]; 
+then 
+    imgPath=$(find ~ -iname *.jpg | head -n 1)
+else 
+    imgPath=$1;
+fi
+
+jp2a --color $imgPath | lolcat-c;

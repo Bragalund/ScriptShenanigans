@@ -1,0 +1,12 @@
+#!/bin/bash  
+
+# Prints size of payload in Byte  
+# 
+# Needed dependencies:
+# 1. curl
+#
+# Example:  
+# $ curlsize "https://www.nrk.no"
+
+curl -so /dev/null $1 -w '%{size_download}'
+

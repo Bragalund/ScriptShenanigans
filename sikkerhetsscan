@@ -1,0 +1,12 @@
+#!/bin/bash  
+
+if [ -z "$1" ]
+    then
+     portNumber='8080'
+    else
+      portNumber=$1;
+fi
+
+echo "Scanning application at port: $portNumber"
+
+nmap --script exploit,vuln -p $portNumber 127.0.0.1
