@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Script for getting answers from chatgpt in terminal
+#
 
 docker run -d --name chatgpt-api-single_3 -e EMAIL=$CHATGPT_EMAIL -e PASSWORD=$CHATGPT_PASSWORD -p 31234:4000 -v ${PWD}/data:/app/data ghcr.io/bytemate/chatapi-single:main
 

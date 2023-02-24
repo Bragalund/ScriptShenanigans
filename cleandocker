@@ -1,7 +1,10 @@
 #!/bin/bash 
+# 
+# Script for cleaning up your harddisk when it becomes low on storage.
 # Stops and removes all containers and images
+# They are usually possible to download later anyways.
 # Easily removes some Gigabytes from your harddisk!
-
+#
 
 for x in `docker ps | awk '{ print $1 }' | grep -v CONTAINER`; do docker stop $x; done
 for x in `docker container ps -a | awk '{ print $1 }' | grep -v CONTAINER`; do docker rm $x; done

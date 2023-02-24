@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# Shows time used for http-request  
+# Shows time used for http-request/response
+#
+# Used for figuring out if i should consider a cache
+# in my application.
 #
 # Needed dependencies:  
 # 1. curl
