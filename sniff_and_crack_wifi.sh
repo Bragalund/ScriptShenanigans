@@ -1,5 +1,6 @@
 #!/bin/bash  
 
+
 curl -o wordlist.txt https://raw.githubusercontent.com/DavidWittman/wpxmlrpcbrute/master/wordlists/1000-most-common-passwords.txt  
 
 curl -o best64.rule https://raw.githubusercontent.com/samirettali/password-cracking-rules/master/best64.rule

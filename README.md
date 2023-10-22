@@ -13,3 +13,4 @@ chmod +x *.sh
 echo "export PATH=\"$HOME/bin:$PATH\"" >> ~/.bashrc        # or .zshrc or òther shell of choice... 
 source ~/.bashrc
 ```
+

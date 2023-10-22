@@ -1,0 +1,70 @@
+---
+- hosts: ingeborg
+
+  tasks:
+    
+    - name: 'APT - install misc software'
+      apt: 
+        name: ['ocl-icd-libopencl1', 'git', 'build-essential']
+        update_cache: yes
+      become: yes
+
+    - name: 'FILE - Create programs folders for hashcat'
+      file:
+        path: /home/bragalund/programmer
+      become_user: bragalund
+
+    - name: 'GIT - clone hashcat repo'
+      git:
+        repo: https://github.com/hashcat/hashcat
+        dest: /home/bragalund/programmer/hashcat
+        version: master
+        update: yes
+        recursive: yes
+      become_user: bragalund
+
+    - name: 'BASH - make in hashcat directory'
+      command: make
+      args:
+        chdir: /home/bragalund/programmer/hashcat
+
+    - name: 'GIT - clone hashcat-utils repo'
+      git:
+        repo: https://github.com/hashcat/hashcat-utils
+        dest: /home/bragalund/programmer/hashcat-utils
+        version: master
+        update: yes
+        recursive: yes
+      become_user: bragalund
+
+    - name: 'BASH - compile hashcat-utils'
+      command: make
+      args:
+        chdir: /home/bragalund/programmer/hashcat-utils/src
+      become_user: bragalund
+
+    - name: 'COPY - copy files from src-folder to bin-folder after compiling'
+      copy:
+        src: "{{ item }}"
+        dest: /home/bragalund/programmer/hashcat-utils/bin
+      with_fileglob:
+        - /home/bragalund/programmer/hashcat-utils/src/*.bin
+      become_user: bragalund
+
+    - name: 'FILE - add hashcat executable to PATH'
+      file:
+        src: /home/bragalund/programmer/hashcat/hashcat
+        dest: /usr/local/bin/hashcat
+        state: link
+      become: yes
+
+    - name: 'FILE - add hashcat-utils executables to PATH'
+      file:
+        src: "{{ item }}"
+        dest: /usr/local/bin/
+        state: link
+      with_fileglob:
+        - /home/bragalund/programmer/hashcat-utils/bin/*.bin
+      become: yes
+        
+
